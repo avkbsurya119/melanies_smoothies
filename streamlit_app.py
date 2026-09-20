@@ -38,6 +38,7 @@ ingredients_list = st.multiselect(
     my_dataframe,
     max_selections=5
 )
+
 if ingredients_list:
     ingredients_string = ''
 
@@ -49,7 +50,9 @@ if ingredients_list:
             'SEARCH_ON'
         ].iloc[0]
 
-        st.subheader(fruit_chosen + ' Nutrition Information')
+        st.subheader(
+            fruit_chosen + ' Nutrition Information'
+        )
 
         smoothiefroot_response = requests.get(
             f"https://my.smoothiefroot.com/api/fruit/{search_on}"
