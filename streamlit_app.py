@@ -1,6 +1,5 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -16,8 +15,9 @@ st.write(
 name_on_order = st.text_input("Name on Smoothie:")
 st.write("The name on your Smoothie will be:", name_on_order)
 
-# Get active Snowflake session
-session = get_active_session()
+# Connect to Snowflake
+cnx = st.connection("snowflake")
+session = cnx.session()
 
 # Get fruit names from Snowflake
 my_dataframe = session.table(
@@ -41,7 +41,7 @@ if ingredients_list:
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
                     values ('""" + ingredients_string + """','"""+name_on_order+"""')"""
 
-    # Submit Order button
+    # Submit Order
     time_to_insert = st.button('Submit Order')
 
     if time_to_insert:
